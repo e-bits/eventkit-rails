@@ -23,3 +23,6 @@ production:
   encoding: unicode
   database: eventkit_production
   pool: 5
+  username: postgres
+  password:
+  host: db
