@@ -23,6 +23,6 @@ production:
   encoding: unicode
   database: eventkit_production
   pool: 5
-  username: postgres
-  password:
+  username: <%= ENV['POSTGRES_USER'] || postgres %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
   host: db

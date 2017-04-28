@@ -1,11 +1,42 @@
 version: '2'
 services:
-  db:
-    image: postgres
+  proxy:
+    image: jwilder/nginx-proxy
+    container_name: proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs:ro
+      - proxy-vhost:/etc/nginx/vhost.d
+      - proxy-html:/usr/share/nginx/html
+
+  proxy-tls-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/etc/nginx/certs:rw
+    volumes_from:
+      - proxy
+
   web:
+    image: e-bits/eventkit-rails
     build: .
     command: bundle exec rails s -e production -p 3000 -b '0.0.0.0'
+    environment:
+      VIRTUAL_HOST: ${DOMAIN_NAME}
+      HTTPS_METHOD: redirect
+      VIRTUAL_PORT: '3000'
+      LETSENCRYPT_HOST: ${DOMAIN_NAME}
+      LETSENCRYPT_EMAIL: 
     ports:
-      - "3000:3000"
-    depends_on:
-      - db
+      - "3000"
+    restart: unless-stopped
+
+volumes:
+  certs:
+  proxy-vhost:
+  proxy-html:
