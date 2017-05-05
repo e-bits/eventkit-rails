@@ -23,6 +23,12 @@ If you get `Permission denied` try first `sudo -i`
 
 ## Start with Docker compose
 ```
+git clone https://github.com/e-bits/eventkit-rails.git && cd eventkit-rails
+
+# copy example environment file and adapt it to your needs
+cp .env.example .env
+vi .env
+
 docker-compose up -d
 ```
 
