@@ -21,13 +21,18 @@ curl -L https://github.com/docker/compose/releases/download/1.12.0/docker-compos
 ```
 If you get `Permission denied` try first `sudo -i`
 
+## Start with Docker compose
+```
+docker-compose up -d
+```
+
 ## Database config
 ### Import data test
 ```
-docker-compose run web bundle exec rake db:seed
+docker-compose run --rm web bundle exec rake db:seed
 ```
 
 ### Create tables
 ```
-docker-compose run web bundle exec rake db:migrate
+docker-compose run --rm web bundle exec rake db:migrate
 ```
