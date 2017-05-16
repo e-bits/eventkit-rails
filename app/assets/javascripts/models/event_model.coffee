@@ -2,7 +2,7 @@
 # Event Model
 # ==========================================================================
 # The frontend model for the event table.
-# 
+#
 
 EventKit.Event = DS.Model.extend({
 	timestamp: DS.attr()
@@ -25,6 +25,7 @@ EventKit.Event = DS.Model.extend({
 	additional_arguments: DS.attr()
 	event_post_timestamp: DS.attr()
 	raw: DS.attr()
+	quantity: DS.attr()
 
 
 
@@ -65,7 +66,7 @@ EventKit.Event = DS.Model.extend({
 	).property('additional_arguments')
 
 	categoryList: (->
-		try 
+		try
 			JSON.parse(@get('category'))
 		catch error
 			[@get('category')]
@@ -93,7 +94,7 @@ EventKit.Event = DS.Model.extend({
 						regex = new RegExp(type, "gi");
 						if @get('reason').match(regex)
 							reason = descriptions[type].replace('__EMAIL__', @get('email'));
-		
+
 		if reason then new Ember.Handlebars.SafeString(reason) else reason
 	).property('event')
 })

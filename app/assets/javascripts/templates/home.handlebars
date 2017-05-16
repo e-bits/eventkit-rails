@@ -32,6 +32,51 @@
   <div class="col-md-6">
     <div class="panel panel-default">
         <div class="panel-heading">
+            Total Events
+        </div>
+        <div class="panel-body" style="height: 275px;">
+            <span style="text-align: center">
+                <h2 style="font-size: 72px; margin-top: 50px; margin-bottom: 0px;">{{model.all.length}}</h2>
+                <h3>
+                    {{#if model.isPlural}}
+                        Events
+                    {{else}}
+                        Event
+                    {{/if}}
+                </h3>
+            </span>
+        </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Top Receivers within last week
+        </div>
+        <div class="list-group">
+
+            {{#if model.top10.length}}
+                {{#each event in model.top10}}
+                    <span href="#" class="list-group-item">
+                        <p style="font-size: 10px; margin: 0px; color: #AAA;">{{event.quantity}}</p>
+                        <p class="truncate" style="font-size: 14px; margin-top: 5px; margin-bottom: 0px;">{{event.email}}</p>
+                    </span>
+                {{/each}}
+            {{else}}
+                <span href="#" class="list-group-item">
+                    <h3 style="font-size: 18px; margin-top: 1em; margin-bottom: 1em;">
+                        No top receivers.
+                    </h3>
+                </span>
+            {{/if}}
+
+
+        </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
             Most Recent Events
         </div>
         <div class="list-group">

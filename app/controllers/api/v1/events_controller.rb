@@ -11,7 +11,7 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY:  Retrieves a list of all the Event records.
 	#
 	def index
-		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :since, :like, :detailed, :format, :token)
+		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :groupby, :since, :like, :detailed, :format, :token)
 
 		if params[:like] then
 			if params[:raw] then
@@ -88,6 +88,10 @@ class Api::V1::EventsController < ApplicationController
 			events = events.order("#{params[:sortby]} #{ordering}")
 		elsif descending then
 			events = events.order("id DESC")
+		end
+
+		if params[:groupby] then
+			events = events.group(params[:groupby]).select('*, COUNT(*) as quantity').order("count(events.#{params[:groupby]}) DESC")
 		end
 
 		if params[:limit] then
