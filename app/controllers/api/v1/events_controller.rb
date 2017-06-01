@@ -91,7 +91,7 @@ class Api::V1::EventsController < ApplicationController
 		end
 
 		if params[:groupby] then
-			events = events.group(params[:groupby]).select('*, COUNT(*) as quantity').order("count(events.#{params[:groupby]}) DESC")
+			events = events.select("events.#{params[:groupby]}, events.#{params[:groupby]} as id, count(events.#{params[:groupby]}) as quantity").group("events.#{params[:groupby]}").order("quantity DESC")
 		end
 
 		if params[:limit] then

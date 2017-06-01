@@ -30,8 +30,5 @@ EventKit.HomeRoute = Em.Route.extend EventKit.ResetScroll, {
 				since: lastweek
 				groupby: 'email'
 			})
-
-			all: @store.find('event')
-
 		})
 }
